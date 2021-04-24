@@ -8,9 +8,7 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>org.luo</groupId>
     <artifactId>luo-modules-system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>luo-system</name>
 
     <properties>
@@ -36,6 +34,17 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.nacos</groupId>
+                    <artifactId>nacos-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
         </dependency>
 
         <!-- SpringCloud Ailibaba Sentinel -->
@@ -45,9 +54,14 @@
         </dependency>
 
         <!-- SpringBoot Actuator -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- Mysql Connector -->
@@ -85,11 +99,11 @@
                 <configuration>
                     <username>${docker.username}</username>
                     <password>${docker.password}</password>
-                    <repository>${docker.registry.url}/${docker.namespace}/${spring.profiles.active}/${project.artifactId}</repository>
+                    <repository>${docker.registry.url}/${docker.namespace}/dev/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.artifactId}-${project.version}.jar</JAR_FILE>
-                        <PROFILES_ACTIVE>${spring.profiles.active}</PROFILES_ACTIVE>
+                        <PROFILES_ACTIVE>dev</PROFILES_ACTIVE>
                         <PROJECT_ARTIFACTID>${project.artifactId}</PROJECT_ARTIFACTID>
                     </buildArgs>
                 </configuration>
