@@ -32,9 +32,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         System.err.println("insertFill -----------------------------");
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
-        this.setFieldValByName(CREATE_USER, 0,metaObject);
+        this.strictInsertFill(metaObject, CREATE_USER, Long.class, 0L);
+        this.strictInsertFill(metaObject, UPDATE_USER, Long.class, 0L);
+//        this.setFieldValByName(CREATE_USER, 0,metaObject);
         this.strictInsertFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
-        this.setFieldValByName(UPDATE_USER, 0,metaObject);
+//        this.setFieldValByName(UPDATE_USER, 0,metaObject);
     }
 
     @Override
