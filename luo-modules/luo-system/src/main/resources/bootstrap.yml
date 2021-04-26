@@ -3,17 +3,17 @@
 #  port: 9201
 
 # Spring
-spring: 
+spring:
   application:
     # 应用名称
     name: luo-modules-system
   profiles:
     # 环境配置
-    active: dev
+    active: "@spring.profiles.active@"
   cloud:
     sentinel:
       log:
-        dir: ${logs.dir}/sentinel
+        dir: ${logs.dir}/${spring.application.name}/sentinel
     nacos:
       server-addr: www.xbk.ink:18848
       discovery:

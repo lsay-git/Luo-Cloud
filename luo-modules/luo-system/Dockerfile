@@ -1,7 +1,7 @@
 FROM openjdk:8-jre-alpine
 MAINTAINER lsay
 
-ARG PROFILES_ACTIVE
+#ARG PROFILES_ACTIVE
 ARG JAR_FILE
 #ARG PROJECT_ARTIFACTID
 
@@ -15,11 +15,11 @@ VOLUME /work/logs/user-center/:/work/user-center/app-log
 
 COPY ${JAR_FILE} /usr/share/user-center/service.jar
 
-ENTRYPOINT exec /usr/bin/java ${JVM_OPTS} -jar /usr/share/user-center/service.jar
+ENTRYPOINT ["exec","/usr/bin/java","-Dfile.encoding=utf8","${JVM_OPTS}","-jar","/usr/share/user-center/service.jar"]
 
-CMD ["--spring.profiles.active=${PROFILES_ACTIVE}"]
+#CMD ["--spring.profiles.active=${PROFILES_ACTIVE}"]
 
-#EXPOSE 8900
+EXPOSE 9201
 
 
 
