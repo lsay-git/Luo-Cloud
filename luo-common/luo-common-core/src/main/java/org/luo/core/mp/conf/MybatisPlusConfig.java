@@ -16,7 +16,7 @@ public class MybatisPlusConfig {
 
     @Bean
     public GlobalConfig globalConfig() {
-        System.err.println("MybatisPlusConfig------------------");
+        System.err.println("INIT MybatisPlusConfig -------------------------------------------");
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setMetaObjectHandler(new MyMetaObjectHandler());
         return globalConfig;

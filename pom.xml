@@ -66,6 +66,13 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- Druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
             <!-- Swagger 依赖配置 -->
             <dependency>
                 <groupId>io.springfox</groupId>

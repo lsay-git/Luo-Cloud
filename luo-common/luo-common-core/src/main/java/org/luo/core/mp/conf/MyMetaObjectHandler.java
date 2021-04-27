@@ -30,7 +30,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        System.err.println("insertFill -----------------------------");
+        System.err.println("insertFill ---------------------------------------------");
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, CREATE_USER, Long.class, 0L);
         this.strictInsertFill(metaObject, UPDATE_USER, Long.class, 0L);
@@ -39,7 +39,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        System.err.println("updateFill -----------------------------");
+        System.err.println("updateFill ---------------------------------------------");
         this.strictUpdateFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, UPDATE_TIME, Integer.class, 0);
     }

@@ -1,5 +1,6 @@
 package org.luo.system;
 
+import org.luo.core.mp.annotation.EnableLuoComponent;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +15,7 @@ import org.springframework.stereotype.Component;
  * }
  * @Author lsay
  **/
-@MapperScan("org.luo.system.*.mapper")
-@ComponentScan(basePackages = {"org.luo.*"})
+@EnableLuoComponent
 @SpringCloudApplication
 public class LuoSystemApplication {
 
