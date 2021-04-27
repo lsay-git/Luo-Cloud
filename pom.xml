@@ -28,6 +28,7 @@
         <swagger.fox.version>3.0.0</swagger.fox.version>
         <swagger.core.version>3.0.25</swagger.core.version>
         <lombok.version>1.18.20</lombok.version>
+        <hutool.version>5.6.3</hutool.version>
     </properties>
 
     <dependencyManagement>
@@ -87,6 +88,12 @@
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>cn.hutool</groupId>-->
+<!--                <artifactId>hutool-all</artifactId>-->
+<!--                <version>${hutool.version}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>org.luo</groupId>
