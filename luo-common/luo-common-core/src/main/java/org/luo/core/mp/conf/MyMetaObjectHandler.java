@@ -37,7 +37,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        logger.info("------------------------------------ insertFill ---------------------------------------------");
+        logger.info("insertFill");
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, CREATE_USER, Long.class, 0L);
         this.strictInsertFill(metaObject, UPDATE_USER, Long.class, 0L);
@@ -46,7 +46,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        logger.info("----------------------------------- updateFill ---------------------------------------------");
+        logger.info("updateFill");
         this.strictUpdateFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, UPDATE_TIME, Integer.class, 0);
     }

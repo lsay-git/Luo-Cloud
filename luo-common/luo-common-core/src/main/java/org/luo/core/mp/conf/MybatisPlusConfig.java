@@ -20,7 +20,7 @@ public class MybatisPlusConfig {
 
     @Bean
     public GlobalConfig globalConfig() {
-        logger.info("----------------------------- INIT MybatisPlusConfig ----------------------------------------");
+        logger.info("INIT MybatisPlusConfig");
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setMetaObjectHandler(new MyMetaObjectHandler());
         return globalConfig;

@@ -24,7 +24,7 @@ public class DruidConfig {
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource druid(){
-        logger.info("---------------------------- INIT DruidConfig --------------------------------------");
+        logger.info("INIT DruidConfig");
         System.getProperties().put("druid.mysql.usePingMethod","false");
         return new DruidDataSource();
     }

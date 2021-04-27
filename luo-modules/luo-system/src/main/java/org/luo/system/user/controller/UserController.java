@@ -1,5 +1,7 @@
 package org.luo.system.user.controller;
 
+import org.luo.core.domain.Result;
+import org.luo.core.exception.ServiceException;
 import org.luo.core.tool.utils.FuncUtils;
 import org.luo.system.user.entity.User;
 import org.luo.system.user.service.UserService;
@@ -12,6 +14,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public void selectUser(){
+        throw new ServiceException();
+//        return Result.ok();
+    }
 
     @PostMapping
     public void addUser(@RequestBody User user){
