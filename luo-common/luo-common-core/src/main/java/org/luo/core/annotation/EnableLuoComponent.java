@@ -1,8 +1,7 @@
-package org.luo.core.mp.annotation;
+package org.luo.core.annotation;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,7 +17,7 @@ import java.lang.annotation.Target;
  **/
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@MapperScan("org.luo.system.*.mapper")
+@MapperScan("org.luo.*.*.mapper")
 @ComponentScan(basePackages = {"org.luo.*"})
 public @interface EnableLuoComponent {
 }

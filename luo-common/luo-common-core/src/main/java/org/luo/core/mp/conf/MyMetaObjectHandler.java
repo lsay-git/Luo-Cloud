@@ -2,6 +2,8 @@ package org.luo.core.mp.conf;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,11 +18,16 @@ import java.time.LocalDateTime;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
-    private static String CREATE_TIME;
-    private static String CREATE_USER;
-    private static String UPDATE_TIME;
-    private static String UPDATE_USER;
+    private static final Logger logger;
+
+    private static final String CREATE_TIME;
+    private static final String CREATE_USER;
+    private static final String UPDATE_TIME;
+    private static final String UPDATE_USER;
     static {
+
+        logger = LoggerFactory.getLogger(MyMetaObjectHandler.class);
+
         CREATE_TIME = "createTime";
         CREATE_USER = "createUser";
         UPDATE_TIME = "updateTime";
@@ -30,7 +37,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        System.err.println("insertFill ---------------------------------------------");
+        logger.info("------------------------------------ insertFill ---------------------------------------------");
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, CREATE_USER, Long.class, 0L);
         this.strictInsertFill(metaObject, UPDATE_USER, Long.class, 0L);
@@ -39,7 +46,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        System.err.println("updateFill ---------------------------------------------");
+        logger.info("----------------------------------- updateFill ---------------------------------------------");
         this.strictUpdateFill(metaObject, UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, UPDATE_TIME, Integer.class, 0);
     }

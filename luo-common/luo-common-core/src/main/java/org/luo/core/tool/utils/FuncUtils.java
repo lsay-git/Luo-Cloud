@@ -14,6 +14,9 @@ import java.util.List;
  **/
 public class FuncUtils {
 
+    public FuncUtils() {
+    }
+
     public static List<Long> toLongList(String str){
         return Arrays.asList(toLongArray(str));
     }

@@ -13,7 +13,7 @@ spring:
   cloud:
     sentinel:
       log:
-        dir: ${logs.dir}/${spring.application.name}/sentinel
+        dir: ${logs.dir}/sentinel
     nacos:
       server-addr: www.xbk.ink:18848
       discovery:
@@ -37,4 +37,4 @@ spring:
           - data-id: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
             refresh: true
 logs:
-  dir: logs
+  dir: logs/${spring.application.name}
