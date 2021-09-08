@@ -1,6 +1,7 @@
 package org.luo.core.druid;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.luo.core.tool.utils.LogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
 @Configuration
 public class DruidConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);
+    private static final Logger logger = LogUtils.logger(DruidConfig.class);
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luo.system.user.mapper.RoleMapper">
+
+
+    <resultMap id="RolePermissionMap" type="org.luo.system.user.vo.RolePermissionVo">
+        <id column="id" jdbcType="BIGINT" property="roleId"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <collection property="oldPermissions" ofType="org.luo.system.user.vo.RoleOldPermissionVo">
+            <result column="pageCode" jdbcType="VARCHAR" property="code"/>
+            <result column="pageName" jdbcType="VARCHAR" property="name"/>
+            <collection property="permissionCodes" ofType="org.luo.system.user.vo.OldPermissionVo">
+                <id column="permissionId" jdbcType="BIGINT" property="permissionId"/>
+                <result column="permission" jdbcType="VARCHAR" property="permission"/>
+                <result column="permission_info" jdbcType="VARCHAR" property="permissionInfo"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="listRole" resultType="org.luo.system.user.vo.RoleVo">
+        SELECT
+            id AS roleId,
+            code,
+            `name`,
+            create_time createTime
+        FROM luo_role
+        WHERE
+            is_deleted = 0
+        <trim>
+            <if test="code != null and code != ''">
+                AND code = #{code}
+            </if>
+        </trim>
+    </select>
+
+    <select id="listUserRoles" resultType="org.luo.system.user.vo.RoleVo">
+        SELECT
+        id AS roleId,
+        code,
+        `name`,
+        create_time createTime
+        FROM luo_role
+        WHERE
+        is_deleted = 0
+        <trim>
+            <choose>
+                <when test="selectType != null and selectType == 2">
+                    AND id NOT IN(
+                        SELECT
+                            role_id
+                        FROM luo_user_role
+                        WHERE is_deleted = 0
+                        AND user_id = #{userId}
+                    )
+                </when>
+                <otherwise>
+                    AND id IN(
+                    SELECT
+                    role_id
+                    FROM luo_user_role
+                    WHERE is_deleted = 0
+                    AND user_id = #{userId}
+                    )
+                </otherwise>
+            </choose>
+        </trim>
+    </select>
+
+    <select id="getRolePermission" resultMap="RolePermissionMap">
+        SELECT
+            t1.id,
+            t1.code,
+            t1.name,
+            t3.code pageCode,
+            t3.name pageName,
+            t3.id permissionId,
+            t3.permission,
+            t3.permission_info
+        FROM luo_role t1
+        LEFT JOIN luo_role_permission t2 ON t1.id = t2.role_id AND t2.is_deleted = 0
+        LEFT JOIN luo_permission t3 ON t3.id = t2.permission_id AND t3.is_deleted = 0
+        WHERE
+            t1.is_deleted = 0
+        AND
+            t1.id = #{roleId}
+    </select>
+
+</mapper>

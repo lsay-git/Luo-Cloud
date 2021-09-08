@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luo.system.user.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="org.luo.system.user.entity.Permission">
+    <!--@mbg.generated-->
+    <!--@Table luo_permission-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="permission_info" jdbcType="VARCHAR" property="permissionInfo" />
+    <result column="permission_level" jdbcType="TINYINT" property="permissionLevel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+
+  <resultMap id="ListResultMap" type="org.luo.system.user.vo.PermissionVo">
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="permissions" ofType="org.luo.system.user.vo.PermissionInfoVo">
+      <result column="permission" jdbcType="VARCHAR" property="permission"/>
+      <result column="permission_info" jdbcType="VARCHAR" property="permissionInfo"/>
+    </collection>
+  </resultMap>
+
+  <resultMap id="PermissionCascadeMap" type="org.luo.system.user.vo.PermissionInfoCascadeVo">
+    <result column="name" jdbcType="VARCHAR" property="label" />
+    <result column="code" jdbcType="VARCHAR" property="value" />
+    <collection property="children" ofType="org.luo.system.user.vo.PermissionInfoCascadeChildrenVo">
+      <result column="id" jdbcType="VARCHAR" property="value"/>
+      <result column="permission_info" jdbcType="VARCHAR" property="label"/>
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, code, permission, permission_info, permission_level, create_time, create_user, 
+    update_time, update_user, `status`, is_deleted
+  </sql>
+
+  <select id="listPermission" resultMap="ListResultMap">
+    SELECT
+        code,
+        `name`,
+        permission,
+        permission_info,
+        create_time
+    FROM luo_permission
+    WHERE
+        is_deleted = 0
+    <trim>
+      <if test="code != null and code != ''">
+        AND code = #{code}
+      </if>
+    </trim>
+  </select>
+
+  <insert id="savePermissins">
+    INSERT INTO luo_permission
+    (
+      id,
+      `name`,
+      code,
+      permission,
+      permission_info,
+      permission_level,
+      create_time,
+      create_user,
+      update_time,
+      update_user,
+      status,
+      is_deleted
+    )
+    VALUES
+    (#{id},#{name},#{code},CONCAT(#{code},':list'),'查询',1,#{createTime},#{createUser},#{updateTime},#{updateUser},#{status},#{isDeleted}),
+    (#{id}+1,#{name},#{code},CONCAT(#{code},':add'),'添加',2,#{createTime},#{createUser},#{updateTime},#{updateUser},#{status},#{isDeleted}),
+    (#{id}+2,#{name},#{code},CONCAT(#{code},':update'),'修改',2,#{createTime},#{createUser},#{updateTime},#{updateUser},#{status},#{isDeleted}),
+    (#{id}+3,#{name},#{code},CONCAT(#{code},':delete'),'删除',2,#{createTime},#{createUser},#{updateTime},#{updateUser},#{status},#{isDeleted})
+  </insert>
+
+  <select id="permissionCascade" resultMap="PermissionCascadeMap">
+    SELECT
+            code,
+            `name`,
+            id,
+            permission_info
+    FROM luo_permission
+    WHERE
+            is_deleted = 0
+    <trim>
+      <if test="type == 'update'">
+        AND id NOT IN (
+            SELECT
+                permission_id
+            FROM luo_role_permission
+            WHERE
+                is_deleted = 0
+            AND
+                role_id = #{roleId}
+
+        )
+      </if>
+    </trim>
+  </select>
+
+</mapper>

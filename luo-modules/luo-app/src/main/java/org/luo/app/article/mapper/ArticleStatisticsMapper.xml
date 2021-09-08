@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luo.app.article.mapper.ArticleStatisticsMapper">
+  <resultMap id="BaseResultMap" type="org.luo.app.article.entity.ArticleStatistics">
+    <!--@mbg.generated-->
+    <!--@Table luo_article_statistics-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="browse_count" jdbcType="BIGINT" property="browseCount" />
+    <result column="collect_count" jdbcType="BIGINT" property="collectCount" />
+    <result column="share_count" jdbcType="BIGINT" property="shareCount" />
+    <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, article_id, browse_count, collect_count, share_count, comment_count, create_time, 
+    create_user, update_time, update_user, `status`, is_deleted
+  </sql>
+</mapper>

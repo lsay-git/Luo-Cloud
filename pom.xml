@@ -21,10 +21,12 @@
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
+        <nacos-client.version>1.4.1</nacos-client.version>
         <fastjson.version>1.2.75</fastjson.version>
-        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
         <druid.version>1.2.4</druid.version>
+        <commons-pool.version>2.6.2</commons-pool.version>
         <swagger.fox.version>3.0.0</swagger.fox.version>
         <swagger.core.version>3.0.25</swagger.core.version>
         <lombok.version>1.18.20</lombok.version>
@@ -60,6 +62,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
+            </dependency>
+
             <!-- JSON 解析器和生成器 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -89,6 +97,12 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool.version}</version>
+            </dependency>
+
 <!--            <dependency>-->
 <!--                <groupId>cn.hutool</groupId>-->
 <!--                <artifactId>hutool-all</artifactId>-->
@@ -98,6 +112,26 @@
             <dependency>
                 <groupId>org.luo</groupId>
                 <artifactId>luo-common-core</artifactId>
+                <version>${luo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luo</groupId>
+                <artifactId>luo-common-mybatis</artifactId>
+                <version>${luo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luo</groupId>
+                <artifactId>luo-common-redis</artifactId>
+                <version>${luo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luo</groupId>
+                <artifactId>luo-common-security</artifactId>
+                <version>${luo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luo</groupId>
+                <artifactId>luo-common-gateway</artifactId>
                 <version>${luo.version}</version>
             </dependency>
         </dependencies>
@@ -140,6 +174,12 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
             </resource>
         </resources>
         <plugins>

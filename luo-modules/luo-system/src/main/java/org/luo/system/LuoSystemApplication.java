@@ -3,6 +3,7 @@ package org.luo.system;
 import org.luo.core.annotation.EnableLuoComponent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @Date 9:52 2021/4/24

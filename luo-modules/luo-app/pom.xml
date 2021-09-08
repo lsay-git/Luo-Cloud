@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.luo</groupId>
+        <artifactId>luo-modules</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>luo-modules-app</artifactId>
+    <name>luo-app</name>
+
+    <properties>
+        <luo.project.id>${project.artifactId}</luo.project.id>
+        <java.version>1.8</java.version>
+        <!-- 推荐使用Harbor -->
+        <docker.registry.url>harbor.xbk.ink</docker.registry.url>
+        <!--        <docker.registry.host>http://192.168.1.128:2375</docker.registry.host>-->
+        <docker.username>admin</docker.username>
+        <docker.password>Harbor@46710</docker.password>
+        <docker.namespace>luo</docker.namespace>
+        <docker.plugin.version>1.4.13</docker.plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- SpringCloud Ailibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Ailibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.nacos</groupId>
+                    <artifactId>nacos-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Ailibaba Sentinel -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- SpringBoot Actuator -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--        </dependency>-->
+
+        <!-- Mysql Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-security</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.luo</groupId>-->
+        <!--            <artifactId>luo-common-gateway</artifactId>-->
+        <!--        </dependency>-->
+    </dependencies>
+
+    <build>
+        <finalName>${luo.project.id}</finalName>
+        <plugins>
+            <!--                  暂时注释 配置时要使用       -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <finalName>${project.build.finalName}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${docker.plugin.version}</version>
+                <configuration>
+                    <username>${docker.username}</username>
+                    <password>${docker.password}</password>
+                    <repository>${docker.registry.url}/${docker.namespace}/${spring.profiles.active}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.artifactId}.jar</JAR_FILE>
+                        <PROFILES_ACTIVE>${spring.profiles.active}</PROFILES_ACTIVE>
+                        <PROJECT_ARTIFACTID>${project.artifactId}</PROJECT_ARTIFACTID>
+                    </buildArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <url>file://${basedir}/target/deploy</url>
+        </repository>
+    </distributionManagement>
+
+</project>

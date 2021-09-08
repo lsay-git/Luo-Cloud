@@ -4,4 +4,109 @@
         "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.luo.system.user.mapper.UserMapper">
 
+    <resultMap id="LoginUserMap" type="org.luo.auth.model.LoginUser">
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="username" jdbcType="BIGINT" property="username"/>
+        <result column="nickname" jdbcType="BIGINT" property="nickname"/>
+        <result column="email" jdbcType="BIGINT" property="email"/>
+        <result column="telephone" jdbcType="BIGINT" property="telephone"/>
+        <result column="sex" jdbcType="BIGINT" property="sex"/>
+        <result column="dead_status" jdbcType="BIGINT" property="deadStatus"/>
+        <collection property="permissions" ofType="java.lang.String" column="user_id" select="selectRolePermission"/>
+        <collection property="menus" ofType="java.lang.String" column="user_id" select="selectRolePermissionCode"/>
+        <collection property="roles" ofType="org.luo.auth.model.RoleModel" column="user_id" select="selectRole"/>
+    </resultMap>
+
+    <resultMap id="ListUserInfoMap" type="org.luo.system.user.vo.UserInfoVo">
+        <result column="userId" jdbcType="BIGINT" property="userId"/>
+        <result column="username" jdbcType="BIGINT" property="username"/>
+        <result column="nickname" jdbcType="BIGINT" property="nickname"/>
+        <result column="email" jdbcType="BIGINT" property="email"/>
+        <result column="telephone" jdbcType="BIGINT" property="telephone"/>
+        <result column="deadStatus" jdbcType="BIGINT" property="deadStatus"/>
+        <result column="createTime" jdbcType="BIGINT" property="createTime"/>
+        <collection property="userRoles" javaType="java.util.List" ofType="org.luo.system.user.vo.RoleVo">
+            <result column="roleId" jdbcType="BIGINT" property="roleId"/>
+            <result column="roleName" jdbcType="VARCHAR" property="name"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectUserInfo" resultMap="LoginUserMap">
+        SELECT
+                t1.username,
+                t2.user_id,
+                t2.nickname,
+                t2.telephone,
+                t2.email,
+                t2.sex,
+                t2.dead_status
+        FROM luo_user t1
+        INNER JOIN luo_user_info t2 ON t1.id = t2.user_id AND t2.is_deleted = 0
+        WHERE
+                t1.is_deleted = 0
+          AND
+                t1.id = #{id}
+    </select>
+
+    <select id="selectRole" resultType="org.luo.auth.model.RoleModel">
+        SELECT
+            t1.id AS roleId,
+            t1.code,
+            t1.name
+        FROM luo_role t1
+        LEFT JOIN luo_user_role t2 ON t1.id = t2.role_id AND t2.is_deleted = 0
+        WHERE
+            t1.is_deleted = 0
+          AND
+            t2.user_id = #{user_id}
+    </select>
+
+    <select id="selectRolePermission" resultType="java.lang.String">
+        SELECT
+            t1.permission
+        FROM luo_permission t1
+        LEFT JOIN luo_role_permission t2 ON t1.id = t2.permission_id AND t2.is_deleted = 0
+        LEFT JOIN luo_user_role t3 ON t2.role_id = t3.role_id AND t3.is_deleted = 0
+        WHERE
+            t1.is_deleted = 0
+        AND
+            t3.user_id = #{user_id}
+    </select>
+
+    <select id="selectRolePermissionCode" resultType="java.lang.String">
+        SELECT
+        DISTINCT t1.code
+        FROM luo_permission t1
+        LEFT JOIN luo_role_permission t2 ON t1.id = t2.permission_id AND t2.is_deleted = 0
+        LEFT JOIN luo_user_role t3 ON t2.role_id = t3.role_id AND t3.is_deleted = 0
+        WHERE
+        t1.is_deleted = 0
+        AND
+        t3.user_id = #{user_id}
+    </select>
+
+    <select id="listUserInfo" resultMap="ListUserInfoMap">
+        SELECT
+            t1.id userId,
+            t1.username,
+            t1.create_time createTime,
+            t2.nickname,
+            t2.telephone,
+            t2.email,
+            t2.dead_status deadStatus,
+            t4.id roleId,
+            t4.name roleName
+        FROM luo_user t1
+        LEFT JOIN luo_user_info t2 ON t1.id = t2.user_id AND t2.is_deleted = 0
+        LEFT JOIN luo_user_role t3 ON t1.id = t3.user_id AND t3.is_deleted = 0
+        LEFT JOIN luo_role t4 ON t3.role_id = t4.id AND t4.is_deleted = 0
+        WHERE
+            t1.is_deleted = 0
+        <trim>
+            <if test="username != null and username != ''">
+                AND t1.username = #{username}
+            </if>
+        </trim>
+    </select>
 </mapper>

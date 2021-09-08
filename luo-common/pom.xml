@@ -15,6 +15,9 @@
     <modules>
         <module>luo-common-redis</module>
         <module>luo-common-core</module>
+        <module>luo-common-security</module>
+        <module>luo-common-gateway</module>
+        <module>luo-common-mybatis</module>
     </modules>
 
 

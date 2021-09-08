@@ -2,6 +2,8 @@ package org.luo.core.exception;
 
 import org.luo.core.constant.Constants;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @Date 16:14 2021/4/27
  * @Description {
@@ -20,6 +22,10 @@ public class ServiceException extends RuntimeException {
     public ServiceException(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    public ServiceException(Throwable e) {
+        super(e.getMessage(),e);
     }
 
     public ServiceException(String msg){

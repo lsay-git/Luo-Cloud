@@ -12,13 +12,13 @@
     <name>luo-system</name>
 
     <properties>
-        <luo.project.id>${artifactId}</luo.project.id>
+        <luo.project.id>${project.artifactId}</luo.project.id>
         <java.version>1.8</java.version>
         <!-- 推荐使用Harbor -->
-        <docker.registry.url>192.168.1.128:10080</docker.registry.url>
+        <docker.registry.url>harbor.xbk.ink</docker.registry.url>
 <!--        <docker.registry.host>http://192.168.1.128:2375</docker.registry.host>-->
         <docker.username>admin</docker.username>
-        <docker.password>Harbor12345</docker.password>
+        <docker.password>Harbor@46710</docker.password>
         <docker.namespace>luo</docker.namespace>
         <docker.plugin.version>1.4.13</docker.plugin.version>
     </properties>
@@ -65,24 +65,32 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis-plus-generator.version}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.luo</groupId>
             <artifactId>luo-common-core</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luo</groupId>
+            <artifactId>luo-common-security</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.luo</groupId>-->
+<!--            <artifactId>luo-common-gateway</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -112,11 +120,11 @@
                 <configuration>
                     <username>${docker.username}</username>
                     <password>${docker.password}</password>
-                    <repository>${docker.registry.url}/${docker.namespace}/dev/${project.artifactId}</repository>
+                    <repository>${docker.registry.url}/${docker.namespace}/${spring.profiles.active}/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
-                        <JAR_FILE>target/${project.artifactId}-${project.version}.jar</JAR_FILE>
-                        <PROFILES_ACTIVE>dev</PROFILES_ACTIVE>
+                        <JAR_FILE>target/${project.artifactId}.jar</JAR_FILE>
+                        <PROFILES_ACTIVE>${spring.profiles.active}</PROFILES_ACTIVE>
                         <PROJECT_ARTIFACTID>${project.artifactId}</PROJECT_ARTIFACTID>
                     </buildArgs>
                 </configuration>
@@ -134,5 +142,12 @@
 
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <url>file://${basedir}/target/deploy</url>
+        </repository>
+    </distributionManagement>
 
 </project>

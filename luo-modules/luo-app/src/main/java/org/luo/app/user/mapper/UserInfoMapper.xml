@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luo.app.user.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="org.luo.app.user.entity.UserInfo">
+    <!--@mbg.generated-->
+    <!--@Table luo_user_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="profile_picture" jdbcType="VARCHAR" property="profilePicture" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="dead_status" jdbcType="TINYINT" property="deadStatus" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, nickname, telephone, email, profile_picture, sex, dead_status, create_user, 
+    create_time, update_user, update_time, `status`, is_deleted
+  </sql>
+</mapper>

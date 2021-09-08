@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.luo.file.module.mapper.FilesMapper">
+  <resultMap id="BaseResultMap" type="org.luo.file.module.entity.Files">
+    <!--@mbg.generated-->
+    <!--@Table luo_files-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+    <result column="size" jdbcType="BIGINT" property="size" />
+    <result column="path" jdbcType="LONGVARCHAR" property="path" />
+    <result column="static_url" jdbcType="LONGVARCHAR" property="staticUrl" />
+    <result column="down_url" jdbcType="LONGVARCHAR" property="downUrl" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="BIGINT" property="createUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user" jdbcType="BIGINT" property="updateUser" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, suffix, `size`, `path`, static_url, down_url, `type`, create_time, create_user, 
+    update_time, update_user, `status`, is_deleted
+  </sql>
+</mapper>

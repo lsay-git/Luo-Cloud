@@ -1,9 +1,9 @@
 package org.luo.core.handler;
 
 import org.luo.core.exception.ServiceException;
-import org.luo.core.domain.Result;
+import org.luo.core.domain.R;
+import org.luo.core.tool.utils.LogUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger log = LogUtils.logger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
-    public Result handleException(Exception e)
+    public R handleException(Exception e)
     {
         log.error(e.getMessage(), e);
-        return Result.error(e.getMessage());
+        return R.error(e.getMessage());
     }
 
     @ExceptionHandler(ServiceException.class)
-    public Result serviceException(ServiceException e){
+    public R serviceException(ServiceException e){
         log.error(e.getMsg());
-        return Result.error(e.getCode(),e.getMsg());
+        return R.error(e.getCode(),e.getMsg());
     }
 
 }
